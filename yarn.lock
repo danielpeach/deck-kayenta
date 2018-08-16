@@ -77,9 +77,9 @@
   version "0.0.104"
   resolved "https://registry.yarnpkg.com/@spinnaker/amazon/-/amazon-0.0.104.tgz#e1b3305cc11f1029deba0a2003be2a4f2ba1973e"
 
-"@spinnaker/core@0.0.237":
-  version "0.0.237"
-  resolved "https://registry.yarnpkg.com/@spinnaker/core/-/core-0.0.237.tgz#ec80ac2f31f5c4bf8d2233d8a98b11c63eb6801e"
+"@spinnaker/core@^0.0.259":
+  version "0.0.259"
+  resolved "https://registry.yarnpkg.com/@spinnaker/core/-/core-0.0.259.tgz#614d15dec343b40b90387302f3ed28929198c39c"
 
 "@spinnaker/styleguide@^1.0.1":
   version "1.0.1"
