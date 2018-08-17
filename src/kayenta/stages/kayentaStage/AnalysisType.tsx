@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { KayentaAnalysisType } from './kayentaStage';
+
+import { KayentaAnalysisType } from 'kayenta/domain';
 
 export interface IAnalysisTypeProps {
   type: KayentaAnalysisType;
@@ -7,7 +8,6 @@ export interface IAnalysisTypeProps {
 }
 
 export const AnalysisType = ({ type, onChange }: IAnalysisTypeProps) => {
-  console.log(type, '<<<< type');
   return (
     <>
       <div className="radio">

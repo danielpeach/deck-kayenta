@@ -38,63 +38,64 @@
       </div>
     </stage-config-field>
 
-    <stage-config-field label="Lifetime"
-                        help-key="pipeline.config.canary.analysisType"
-                        field-columns="8"
-                        ng-if="kayentaCanaryStageCtrl.stage.analysisType === 'realTime'
-                               || kayentaCanaryStageCtrl.stage.analysisType === 'realTimeAutomatic'"
-                        ng-class="kayentaCanaryStageCtrl.getLifetimeClassnames()"
-                        style="padding-left: 0; padding-right: 0;">
-      <input type="text"
-             ng-model="kayentaCanaryStageCtrl.state.lifetime.hours"
-             ng-required="kayentaCanaryStageCtrl.isLifetimeRequired()"
-             class="form-control input-sm"
-             style="display: inline-block; width: 11%"
-             ng-change="kayentaCanaryStageCtrl.onLifetimeChange()" />
-      <span class="form-control-static">
+    <for-analysis-type stage="kayentaCanaryStageCtrl.stage" types="realTime, realTimeAutomatic">
+      <stage-config-field label="Lifetime"
+                          help-key="pipeline.config.canary.analysisType"
+                          field-columns="8"
+                          ng-class="kayentaCanaryStageCtrl.getLifetimeClassnames()"
+                          style="padding-left: 0; padding-right: 0;">
+        <input type="text"
+               ng-model="kayentaCanaryStageCtrl.state.lifetime.hours"
+               ng-required="kayentaCanaryStageCtrl.isLifetimeRequired()"
+               class="form-control input-sm"
+               style="display: inline-block; width: 11%"
+               ng-change="kayentaCanaryStageCtrl.onLifetimeChange()" />
+        <span class="form-control-static">
         hours
-      </span>
-      <input type="text"
-             ng-model="kayentaCanaryStageCtrl.state.lifetime.minutes"
-             ng-required="kayentaCanaryStageCtrl.isLifetimeRequired()"
-             class="form-control input-sm"
-             style="display: inline-block; width: 11%; margin-left: 12px;"
-             ng-change="kayentaCanaryStageCtrl.onLifetimeChange()" />
-      <span class="form-control-static">
-        minutes
-      </span>
-    </stage-config-field>
+        </span>
+          <input type="text"
+                 ng-model="kayentaCanaryStageCtrl.state.lifetime.minutes"
+                 ng-required="kayentaCanaryStageCtrl.isLifetimeRequired()"
+                 class="form-control input-sm"
+                 style="display: inline-block; width: 11%; margin-left: 12px;"
+                 ng-change="kayentaCanaryStageCtrl.onLifetimeChange()" />
+          <span class="form-control-static">
+          minutes
+        </span>
+      </stage-config-field>
+    </for-analysis-type>
 
-    <stage-config-field label="Start Time"
-                        help-key="pipeline.config.canary.startTimeIso"
-                        ng-if="kayentaCanaryStageCtrl.stage.analysisType === 'retrospective'">
-      <input
-        class="form-control input-sm"
-        ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.scopes[0].startTimeIso"
-        type="text"/>
-    </stage-config-field>
+    <for-analysis-type stage="kayentaCanaryStageCtrl.stage" types="retrospective">
+      <stage-config-field label="Start Time"
+                          help-key="pipeline.config.canary.startTimeIso">
+        <input
+          class="form-control input-sm"
+          ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.scopes[0].startTimeIso"
+          type="text"/>
+      </stage-config-field>
 
-    <stage-config-field label="End Time"
-                        help-key="pipeline.config.canary.endTimeIso"
-                        ng-if="kayentaCanaryStageCtrl.stage.analysisType === 'retrospective'">
-      <input
-        class="form-control input-sm"
-        ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.scopes[0].endTimeIso"
-        type="text"/>
-    </stage-config-field>
+      <stage-config-field label="End Time"
+                          help-key="pipeline.config.canary.endTimeIso">
+        <input
+          class="form-control input-sm"
+          ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.scopes[0].endTimeIso"
+          type="text"/>
+      </stage-config-field>
+    </for-analysis-type>
 
-    <stage-config-field label="Delay"
-                        help-key="pipeline.config.canary.delayBeforeAnalysis"
-                        field-columns="5"
-                        ng-if="kayentaCanaryStageCtrl.stage.analysisType === 'realTime' || kayentaCanaryStageCtrl.stage.analysisType === 'realTimeAutomatic'">
-      <input type="text"
-             ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.beginCanaryAnalysisAfterMins"
-             class="form-control input-sm"
-             style="display: inline-block; width: 19%"/>
-      <span class="form-control-static">
-        minutes before starting analysis
-      </span>
-    </stage-config-field>
+    <for-analysis-type stage="kayentaCanaryStageCtrl.stage" types="realTime, realTimeAutomatic">
+      <stage-config-field label="Delay"
+                          help-key="pipeline.config.canary.delayBeforeAnalysis"
+                          field-columns="5">
+        <input type="text"
+               ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.beginCanaryAnalysisAfterMins"
+               class="form-control input-sm"
+               style="display: inline-block; width: 19%"/>
+        <span class="form-control-static">
+          minutes before starting analysis
+        </span>
+      </stage-config-field>
+    </for-analysis-type>
 
     <stage-config-field label="Interval"
                         help-key="pipeline.config.canary.canaryInterval"
@@ -153,39 +154,40 @@
     </stage-config-field>
   </kayenta-stage-config-section>
 
-  <kayenta-stage-config-section
-    title="Baseline Version"
-    ng-if="kayentaCanaryStageCtrl.stage.analysisType === 'realTimeAutomatic'">
-    <stage-config-field label="Provider" ng-if="kayentaCanaryStageCtrl.providers.length > 1
+  <for-analysis-type stage="kayentaCanaryStageCtrl.stage" types="realTimeAutomatic">
+    <kayenta-stage-config-section title="Baseline Version">
+      <stage-config-field label="Provider" ng-if="kayentaCanaryStageCtrl.providers.length > 1
                                                 && kayentaCanaryStageCtrl.stage.isNew">
-      <provider-selector providers="kayentaCanaryStageCtrl.providers"
-                         component="kayentaCanaryStageCtrl.stage.canaryConfig.baseline"
-                         field="cloudProvider"
-                         read-only="!kayentaCanaryStageCtrl.stage.isNew"></provider-selector>
-    </stage-config-field>
+        <provider-selector providers="kayentaCanaryStageCtrl.providers"
+                           component="kayentaCanaryStageCtrl.stage.deployments.baseline"
+                           on-change="kayentaCanaryStageCtrl.handleProviderChange()"
+                           field="cloudProvider"
+                           read-only="!kayentaCanaryStageCtrl.stage.isNew"></provider-selector>
+      </stage-config-field>
 
-    <stage-config-field label="Account">
-      <account-select-field
-        component="kayentaCanaryStageCtrl.stage.deployments.baseline"
-        field="account"
-        accounts="kayentaCanaryStageCtrl.accounts"
-        provider="kayentaCanaryStageCtrl.stage.deployments.baseline.cloudProvider"
-        required>
-      </account-select-field>
-    </stage-config-field>
+      <stage-config-field label="Account">
+        <account-select-field
+          component="kayentaCanaryStageCtrl.stage.deployments.baseline"
+          field="account"
+          accounts="kayentaCanaryStageCtrl.accounts"
+          on-change="kayentaCanaryStageCtrl.setClusterList()"
+          provider="kayentaCanaryStageCtrl.stage.deployments.baseline.cloudProvider"
+          required>
+        </account-select-field>
+      </stage-config-field>
 
-    <stage-config-field label="Cluster">
-      <cluster-selector
-        ng-if="application.serverGroups.loaded"
-        clusters="kayentaCanaryStageCtrl.clusterList"
-        required="true"
-        model="kayentaCanaryStageCtrl.stage.deployments.baseline.cluster">
-      </cluster-selector>
-    </stage-config-field>
-  </kayenta-stage-config-section>
+      <stage-config-field label="Cluster">
+        <cluster-selector
+          ng-if="application.serverGroups.loaded"
+          clusters="kayentaCanaryStageCtrl.clusterList"
+          required="true"
+          model="kayentaCanaryStageCtrl.stage.deployments.baseline.cluster">
+        </cluster-selector>
+      </stage-config-field>
+    </kayenta-stage-config-section>
+  </for-analysis-type>
 
   <kayenta-stage-config-section title="Baseline + Canary Server Groups">
-
     <section-header ng-if="kayentaCanaryStageCtrl.stage.analysisType === 'realTime'">
       <span
         uib-tooltip="Click to populate with expressions for resolving control
@@ -194,98 +196,94 @@
         class="fa fa-magic clickable"></span>
     </section-header>
 
-    <stage-config-field label="Baseline"
-                        ng-if="kayentaCanaryStageCtrl.stage.analysisType === 'realTime'
-                               || kayentaCanaryStageCtrl.stage.analysisType === 'retrospective'"
-                        help-key="pipeline.config.canary.baselineGroup">
-      <input
-        class="form-control input-sm"
-        ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.scopes[0].controlScope"
-        required
-        type="text"/>
-    </stage-config-field>
+    <for-analysis-type stage="kayentaCanaryStageCtrl.stage" types="realTime, retrospective">
+      <stage-config-field label="Baseline"
+                          help-key="pipeline.config.canary.baselineGroup">
+        <input
+          class="form-control input-sm"
+          ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.scopes[0].controlScope"
+          required
+          type="text"/>
+      </stage-config-field>
 
-    <stage-config-field label="Baseline Location"
-                        ng-if="kayentaCanaryStageCtrl.stage.analysisType === 'realTime'
-                               || kayentaCanaryStageCtrl.stage.analysisType === 'retrospective'"
-                        help-key="pipeline.config.canary.baselineLocation">
-      <input
-        class="form-control input-sm"
-        ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.scopes[0].controlLocation"
-        required
-        type="text"/>
-    </stage-config-field>
+      <stage-config-field label="Baseline Location"
+                          help-key="pipeline.config.canary.baselineLocation">
+        <input
+          class="form-control input-sm"
+          ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.scopes[0].controlLocation"
+          required
+          type="text"/>
+      </stage-config-field>
 
-    <stage-config-field label="Canary"
-                        ng-if="kayentaCanaryStageCtrl.stage.analysisType === 'realTime'
-                               || kayentaCanaryStageCtrl.stage.analysisType === 'retrospective'"
-                        help-key="pipeline.config.canary.canaryGroup">
-      <input
-        class="form-control input-sm"
-        ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.scopes[0].experimentScope"
-        required
-        type="text"/>
-    </stage-config-field>
+      <stage-config-field label="Canary"
+                          help-key="pipeline.config.canary.canaryGroup">
+        <input
+          class="form-control input-sm"
+          ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.scopes[0].experimentScope"
+          required
+          type="text"/>
+      </stage-config-field>
 
-    <stage-config-field label="Canary Location"
-                        ng-if="kayentaCanaryStageCtrl.stage.analysisType === 'realTime'
-                               || kayentaCanaryStageCtrl.stage.analysisType === 'retrospective'"
-                        help-key="pipeline.config.canary.canaryLocation">
-      <input
-        class="form-control input-sm"
-        ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.scopes[0].experimentLocation"
-        required
-        type="text"/>
-    </stage-config-field>
+      <stage-config-field label="Canary Location"
+                          help-key="pipeline.config.canary.canaryLocation">
+        <input
+          class="form-control input-sm"
+          ng-model="kayentaCanaryStageCtrl.stage.canaryConfig.scopes[0].experimentLocation"
+          required
+          type="text"/>
+      </stage-config-field>
+    </for-analysis-type>
 
-    <div class="row" ng-if="kayentaCanaryStageCtrl.stage.analysisType === 'realTimeAutomatic'">
-      <div style="margin: 10px 10px 0 50px;">
-        <div class="well well-sm">
-          <table class="table">
-            <thead>
-            <tr>
-              <th>Location</th>
-              <th>Baseline</th>
-              <th>Canary</th>
-              <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="clusterPair in kayentaCanaryStageCtrl.stage.deployments.clusterPairs">
-              <td>
-                <account-tag account="clusterPair.control.account"></account-tag>
-                {{kayentaCanaryStageCtrl.getRegion(clusterPair.control)}}
-              </td>
-              <td>
-                {{kayentaCanaryStageCtrl.getServerGroupName(clusterPair.control)}}
-                <br/>
-                <a href ng-click="kayentaCanaryStageCtrl.editServerGroup(clusterPair.control, $index, 'Control')">Edit</a>
-              </td>
-              <td>
-                {{kayentaCanaryStageCtrl.getServerGroupName(clusterPair.experiment)}}
-                <br/>
-                <a href ng-click="kayentaCanaryStageCtrl.editServerGroup(clusterPair.experiment, $index, 'Experiment')">Edit</a>
-              </td>
-              <td>
-                <a href ng-click="kayentaCanaryStageCtrl.deletePair($index);">
-                  <span class="glyphicon glyphicon-trash" uib-tooltip="Delete Pair"></span>
-                </a>
-              </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr ng-if="!kayentaCanaryStageCtrl.stage.deployments.clusterPairs.length">
-              <td colspan="4">
-                <button class="btn btn-block btn-sm add-new" ng-click="kayentaCanaryStageCtrl.addPair()">
-                  <span class="glyphicon glyphicon-plus-sign"></span> Add baseline / canary pair
-                </button>
-              </td>
-            </tr>
-            </tfoot>
-          </table>
+    <for-analysis-type stage="kayentaCanaryStageCtrl.stage" types="realTimeAutomatic">
+      <div class="row">
+        <div style="margin: 10px 10px 0 50px;">
+          <div class="well well-sm">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Location</th>
+                <th>Baseline</th>
+                <th>Canary</th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="clusterPair in kayentaCanaryStageCtrl.stage.deployments.clusterPairs">
+                <td>
+                  <account-tag account="clusterPair.control.account"></account-tag>
+                  {{kayentaCanaryStageCtrl.getRegion(clusterPair.control)}}
+                </td>
+                <td>
+                  {{kayentaCanaryStageCtrl.getServerGroupName(clusterPair.control)}}
+                  <br/>
+                  <a href ng-click="kayentaCanaryStageCtrl.editServerGroup(clusterPair.control, $index, 'control')">Edit</a>
+                </td>
+                <td>
+                  {{kayentaCanaryStageCtrl.getServerGroupName(clusterPair.experiment)}}
+                  <br/>
+                  <a href ng-click="kayentaCanaryStageCtrl.editServerGroup(clusterPair.experiment, $index, 'experiment')">Edit</a>
+                </td>
+                <td>
+                  <a href ng-click="kayentaCanaryStageCtrl.deletePair($index);">
+                    <span class="glyphicon glyphicon-trash" uib-tooltip="Delete Pair"></span>
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+              <tfoot>
+              <tr ng-if="!kayentaCanaryStageCtrl.stage.deployments.clusterPairs.length">
+                <td colspan="4">
+                  <button class="btn btn-block btn-sm add-new" ng-click="kayentaCanaryStageCtrl.addPair()">
+                    <span class="glyphicon glyphicon-plus-sign"></span> Create baseline / canary pair
+                  </button>
+                </td>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </for-analysis-type>
   </kayenta-stage-config-section>
 
   <kayenta-stage-config-section title="Metric Scope">

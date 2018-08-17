@@ -14,7 +14,7 @@ const exclusionPattern = /(node_modules|\.\.\/deck)/;
 module.exports = {
   context: basePath,
   entry: {
-    lib: path.join(basePath, 'src', 'kayenta', 'index.ts'),
+    lib: ['babel-polyfill', path.join(basePath, 'src', 'kayenta', 'index.ts')],
   },
   output: {
     path: path.join(basePath, 'lib'),

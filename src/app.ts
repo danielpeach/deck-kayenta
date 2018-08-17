@@ -1,4 +1,5 @@
 import { module } from 'angular';
+import 'babel-polyfill';
 
 import { AMAZON_MODULE } from '@spinnaker/amazon';
 import { CORE_MODULE, ApplicationDataSourceRegistry } from '@spinnaker/core';
